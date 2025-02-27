@@ -17,7 +17,7 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
             code,
             client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
             client_secret: import.meta.env.VITE_GOOGLE_CLIENT_SECRET,
-            redirect_uri: 'http://localhost:5173/auth/callback',
+            redirect_uri: `${url.origin}/auth/callback`,
             grant_type: 'authorization_code'
         })
     }).then(res => res.json());
@@ -27,11 +27,6 @@ export const GET: RequestHandler = async ({ url, cookies }) => {
             Authorization: `Bearer ${tokens.access_token}`
         }
     }).then(res => res.json());
-
-    // Here you would typically:
-    // 1. Create a session
-    // 2. Store user info in your database
-    // 3. Set cookies or JWT tokens
 
     cookies.set('session', tokens.access_token, {
         path: '/',

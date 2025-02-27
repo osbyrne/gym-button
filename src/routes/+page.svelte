@@ -1,6 +1,6 @@
 <script lang="ts">
 	let {} = $props();
-	const REDIRECT_URI = 'http://localhost:5173/auth/callback'; // For development
+	const REDIRECT_URI = `${window.location.origin}/auth/callback`;
 	const SCOPES = [
 		'profile',
 		'https://www.googleapis.com/auth/calendar',

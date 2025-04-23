@@ -1,6 +1,14 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	let {} = $props();
-	const REDIRECT_URI = `${window.location.origin}/auth/callback`;
+	let REDIRECT_URI = ''; // Initialize with a default or handle potential undefined state
+
+	onMount(() => {
+		// This code runs only in the browser
+		REDIRECT_URI = `${window.location.origin}/auth/callback`;
+	});
+
 	const SCOPES = [
 		'profile',
 		'https://www.googleapis.com/auth/calendar',
@@ -11,6 +19,7 @@
 <div class="container">
 	<button
 		onclick={() => {
+			if (!REDIRECT_URI) return; // Optional: Prevent click if URI not ready yet
 			window.location.href =
 				'https://accounts.google.com/o/oauth2/v2/auth?' +
 				new URLSearchParams({
